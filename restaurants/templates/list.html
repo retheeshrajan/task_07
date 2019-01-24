@@ -8,10 +8,13 @@
         {% for restaurant in restaurants %}
             <a href="{% url 'restaurant-detail' restaurant.id %}">
                 <ul>
-                    <li>{{restaurant.name}}</li>
-                    <li>{{restaurant.description}}</li>
-                    <li>{{restaurant.opening_time}}</li>
-                    <li>{{restaurant.closing_time}}</li>
+                    <li>
+                        <h1>{{restaurant.name}}</h1>
+                        <p>{{restaurant.description}}</p>
+                    </li>
+                    <li>
+                        <a href="{% url 'restaurant-delete' restaurant.id %}">Delete</a>
+                    
                 </ul>
             </a>
         {% endfor %}

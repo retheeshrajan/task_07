@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Restaurant
 from .forms import RestaurantForm
 
+
 def welcome(request):
     return render(request, 'index.html', {'msg':'Hello World!'})
 
@@ -31,10 +32,22 @@ def restaurant_create(request):
     return render(request, 'create.html', context)
 
 def restaurant_update(request, restaurant_id):
+    restaurant = Restaurant.objects.get(id=restaurant_id)
+    form = RestaurantForm(instance=restaurant)
+    if request.method == "POST":
+        form = RestaurantForm(request.POST, instance=restaurant)
+        if form.is_valid():
+            form.save()
+            return redirect('restaurant-list')
+    context = {
+        "form": form,
+        "restaurant":restaurant
+    }
 
-    return
+    return render(request, "update.html", context)
+
+
 
 def restaurant_delete(request, restaurant_id):
-
-
-    return
+    Restaurant.objects.get(id=restaurant_id).delete()
+    return redirect('restaurant-list')
